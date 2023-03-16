@@ -3,7 +3,7 @@ import logo from "../../assets/logo.png"
 
 function NavBar() {
     return (
-        <ContainerNavBar>
+        <ContainerNavBar data-test="header">
             <h1>Trackit</h1>
             <img src={logo} alt="imagem perfil"></img>
         </ContainerNavBar>

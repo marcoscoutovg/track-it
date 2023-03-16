@@ -3,10 +3,18 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <ContainerFooter>
-            <Link to="/habitos">Hábitos</Link>
-            <Link to="/hoje"><ButtonToday>Hoje</ButtonToday></Link>
-            <Link to="/historico">Histórico</Link>
+        <ContainerFooter data-test="menu">
+            <Link
+                data-test="habit-link"
+                to="/habitos">Hábitos</Link>
+            <Link
+                data-test="today-link"
+                to="/hoje">
+                <ButtonToday>Hoje</ButtonToday>
+            </Link>
+            <Link
+                data-test="historic-link"
+                to="/historico">Histórico</Link>
         </ContainerFooter>
     );
 }

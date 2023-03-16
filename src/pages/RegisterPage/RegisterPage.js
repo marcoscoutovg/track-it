@@ -10,10 +10,10 @@ function RegisterPage() {
             <Logo />
             <InfoRegister />
 
-            <Link to="/">
-                <h2>
-                    Já tem uma conta? Faça o login!
-                </h2>
+            <Link
+                data-test="login-link"
+                to="/">
+                Já tem uma conta? Faça o login!
             </Link>
         </LoginContainer>
     );
@@ -25,7 +25,7 @@ const LoginContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    h2 {
+    >a {
         width: 262px;
         height: 17px;
         font-family: 'Lexend Deca';

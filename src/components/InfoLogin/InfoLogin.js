@@ -1,33 +1,75 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import BASE_URL from "../../constants/baseUrl";
+import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
+
+function InfoLogin({ setToken }) {
+
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [enabled, setEnabled] = useState(false);
+
+    function login(e) {
+        e.preventDefault();
+
+        const body = { email, password }
+        const url = `${BASE_URL}/auth/login`;
 
 
-function InfoLogin() {
-
-    function sendInfoLogin() {
-
+        axios.post(url, body)
+            .then(res => {
+                console.log(res)
+                if (res.data === undefined || res.data === null) {
+                    setEnabled(true);
+                } else {
+                    setEnabled(false);
+                }
+                setToken(res.data.token)
+                navigate("/hoje")
+            })
+            .catch(err => alert(err.response.data.message));
     }
+
     return (
-        <Form onSubmit={sendInfoLogin}>
+        <Form onSubmit={login}>
             <label htmlFor="email"></label>
             <input
+                data-test="email-input"
                 id="email"
                 type="email"
                 placeholder="email"
                 name="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 required
             />
             <label htmlFor="password"></label>
             <input
+                data-test="password-input"
                 id="password"
                 type="password"
                 placeholder="senha"
                 name="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 required
             />
-                <Link to="/hoje">
-                    <Button type="submit"><p>Entrar</p></Button>
-                </Link>
+            <Button
+                data-test="login-btn"
+                disabled={enabled}
+                type="submit">{!enabled ? "Entrar"
+                    : <ThreeDots
+                        height="27"
+                        width="60"
+                        radius="9"
+                        color="#ffffff"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true} />}</Button>
         </Form>
     );
 }
@@ -49,20 +91,14 @@ const Button = styled.button`
     align-items: center;
     margin-top: 6px;
     margin-bottom: 25px;
-
-
-    p {
-        width: 64px;
-        height: 26px;
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20.976px;
-        line-height: 26px;
-        text-align: center;
-        color: #FFFFFF;
-        text-decoration: none;
-    }
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.976px;
+    line-height: 26px;
+    text-align: center;
+    color: #FFFFFF;
+    text-decoration: none;
 `
 
 export default InfoLogin;

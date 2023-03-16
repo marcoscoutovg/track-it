@@ -4,16 +4,17 @@ import InfoLogin from "../../components/InfoLogin/InfoLogin";
 import Logo from "../../components/Logo/Logo";
 
 
-function LoginPage() {
+function LoginPage({ setToken }) {
+
     return (
         <LoginContainer>
             <Logo />
-            <InfoLogin />
+            <InfoLogin setToken={setToken} />
 
-            <Link to="/cadastro">
-                <h2>
-                    Não tem uma conta? Cadastre-se!
-                </h2>
+            <Link
+                data-test="signup-link"
+                to="/cadastro">
+                Não tem uma conta? Cadastre-se!
             </Link>
         </LoginContainer>
     );
@@ -25,7 +26,7 @@ const LoginContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    h2 {
+    >a {
         width: 262px;
         height: 17px;
         font-family: 'Lexend Deca';
