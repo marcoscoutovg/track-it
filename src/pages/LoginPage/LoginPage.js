@@ -4,12 +4,12 @@ import InfoLogin from "../../components/InfoLogin/InfoLogin";
 import Logo from "../../components/Logo/Logo";
 
 
-function LoginPage({ setToken }) {
+function LoginPage() {
 
     return (
         <LoginContainer>
             <Logo />
-            <InfoLogin setToken={setToken} />
+            <InfoLogin />
 
             <Link
                 data-test="signup-link"

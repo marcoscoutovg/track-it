@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import BASE_URL from "../../constants/baseUrl";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import { LevelContext } from "../../LevelContext";
 
-function InfoLogin({ setToken }) {
+function InfoLogin() {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [enabled, setEnabled] = useState(false);
+    const {setToken} = useContext(LevelContext)
 
     function login(e) {
         e.preventDefault();
@@ -21,7 +23,6 @@ function InfoLogin({ setToken }) {
 
         axios.post(url, body)
             .then(res => {
-                console.log(res)
                 if (res.data === undefined || res.data === null) {
                     setEnabled(true);
                 } else {

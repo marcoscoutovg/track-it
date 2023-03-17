@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 function Footer() {
     return (
@@ -7,11 +8,27 @@ function Footer() {
             <Link
                 data-test="habit-link"
                 to="/habitos">Hábitos</Link>
-            <Link
-                data-test="today-link"
-                to="/hoje">
-                <ButtonToday>Hoje</ButtonToday>
-            </Link>
+            
+                <Link
+                    data-test="today-link"
+                    to="/hoje">
+                    <ButtonToday><CircularProgressbar
+                value={66}
+                background={true}
+                text={"Hoje"}
+                backgroundPadding={6}
+                strokeWidth={8}
+                styles={buildStyles({
+                rotation: 0,
+                textSize: '25px',
+                pathTransitionDuration: 0.5,
+                pathColor: 'white',
+                textColor: 'white',
+                trailColor: `transparent`,
+                backgroundColor: '#52b6ff',
+                })}></CircularProgressbar></ButtonToday>
+                </Link>
+            
             <Link
                 data-test="historic-link"
                 to="/historico">Histórico</Link>

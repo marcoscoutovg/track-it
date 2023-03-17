@@ -2,15 +2,18 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../constants/baseUrl";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
+import { LevelContext } from "../../LevelContext";
 
 
 function InfoRegister() {
 
     const navigate = useNavigate();
+    const [enabled, setEnabled] = useState(false);
     const [email, setEmail] = useState("")
     const [name, setName] = useState("")
-    const [image, setImage] = useState("")
+    const {image, setImage} = useContext(LevelContext)
     const [password, setPassword] = useState("")
 
     function register(e) {
@@ -20,6 +23,11 @@ function InfoRegister() {
 
         axios.post(`${BASE_URL}/auth/sign-up`, body)
             .then(res => {
+                if (res.data === undefined || res.data === null) {
+                    setEnabled(true);
+                } else {
+                    setEnabled(false);
+                }
                 navigate("/")
                 console.log("enviou")
             })
@@ -75,8 +83,18 @@ function InfoRegister() {
             />
             <Button
                 data-test="sigup-btn"
-                type="submit"><p>Cadastrar</p></Button>
-        </Form>
+                disabled={enabled}
+                type="submit">{!enabled ? "Cadastrar"
+                    : <ThreeDots
+                        height="27"
+                        width="60"
+                        radius="9"
+                        color="#ffffff"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true} />}</Button>
+        </Form >
     );
 }
 
@@ -97,20 +115,14 @@ const Button = styled.button`
     align-items: center;
     margin-top: 6px;
     margin-bottom: 25px;
-
-
-    p {
-        width: 164px;
-        height: 26px;
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20.976px;
-        line-height: 26px;
-        text-align: center;
-        color: #FFFFFF;
-        text-decoration: none;
-    }
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.976px;
+    line-height: 26px;
+    text-align: center;
+    color: #FFFFFF;
+    text-decoration: none;
 `
 
 export default InfoRegister;

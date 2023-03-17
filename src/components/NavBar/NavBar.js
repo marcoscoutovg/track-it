@@ -1,11 +1,15 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import logo from "../../assets/logo.png"
+import { LevelContext } from "../../LevelContext";
 
 function NavBar() {
+    const {image} = useContext(LevelContext)
+
     return (
         <ContainerNavBar data-test="header">
             <h1>Trackit</h1>
-            <img src={logo} alt="imagem perfil"></img>
+            <img src={image} alt="imagem perfil"></img>
         </ContainerNavBar>
     );
 }
