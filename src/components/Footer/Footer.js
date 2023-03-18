@@ -20,7 +20,7 @@ function Footer() {
                 strokeWidth={8}
                 styles={buildStyles({
                 rotation: 0,
-                textSize: '25px',
+                textSize: '20px',
                 pathTransitionDuration: 0.5,
                 pathColor: 'white',
                 textColor: 'white',

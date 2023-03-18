@@ -12,7 +12,7 @@ function InfoLogin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [enabled, setEnabled] = useState(false);
-    const {setToken} = useContext(LevelContext)
+    const {setToken, setImage} = useContext(LevelContext)
 
     function login(e) {
         e.preventDefault();
@@ -28,6 +28,7 @@ function InfoLogin() {
                 } else {
                     setEnabled(false);
                 }
+                setImage(res.data.image)
                 setToken(res.data.token)
                 navigate("/hoje")
             })

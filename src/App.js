@@ -11,9 +11,10 @@ function App() {
 
   const [token, setToken] = useState("");
   const [image, setImage] = useState("");
+  const [habitsList, setHabitsList] = useState([]);
 
   return (
-    <LevelContext.Provider value={{token, setToken, image, setImage}}>
+    <LevelContext.Provider value={{token, setToken, image, setImage, habitsList, setHabitsList}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
