@@ -6,21 +6,15 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import BASE_URL from "../../constants/baseUrl";
 import { LevelContext } from "../../LevelContext";
-import calendar from "../../constants/calendar";
+import daysOfWeek from "../../constants/daysOfWeek";
 
 function HabitsPage() {
 
-    const { token, habitsList, setHabitsList } = useContext(LevelContext);
+    const { habitsList, setHabitsList, config } = useContext(LevelContext);
     const [add, setAdd] = useState(false);
     const [name, setName] = useState("");
     const [days, setDays] = useState([]);
 
-
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
 
     useEffect(() => {
         axios.get(`${BASE_URL}/habits`, config)
@@ -101,7 +95,7 @@ function HabitsPage() {
                             />
 
                             <Week>
-                                {calendar.map((c) =>
+                                {daysOfWeek.map((c) =>
                                     <Day
                                         data-test="habit-day"
                                         key={c.id}
@@ -126,7 +120,7 @@ function HabitsPage() {
                             <InfoHabits >
                                 <h1 data-test="habit-name">{h.name}</h1>
                                 <Week>
-                                    {calendar.map((c) =>
+                                    {daysOfWeek.map((c) =>
                                         <Day
                                             data-test="habit-day"
                                             key={c.id}
@@ -134,7 +128,9 @@ function HabitsPage() {
                                 </Week>
                             </InfoHabits>
 
-                            <Trash onClick={() => deleteHabit(h.id)} />
+                            <Trash
+                                data-test="habit-delete-btn"
+                                onClick={() => deleteHabit(h.id)} />
 
                         </Habit>)) : (<p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear</p>)}
 

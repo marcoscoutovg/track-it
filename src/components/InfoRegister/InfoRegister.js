@@ -31,7 +31,7 @@ function InfoRegister() {
                 navigate("/")
                 console.log("enviou")
             })
-            .catch(err => alert(err.response.data.details[0]))
+            .catch(err => alert(err.response.data.message))
 
     }
 

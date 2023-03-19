@@ -13,8 +13,17 @@ function App() {
   const [image, setImage] = useState("");
   const [habitsList, setHabitsList] = useState([]);
 
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
   return (
-    <LevelContext.Provider value={{token, setToken, image, setImage, habitsList, setHabitsList}}>
+    <LevelContext.Provider value={{
+      token, setToken, image, setImage, habitsList,
+      setHabitsList, config
+    }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
