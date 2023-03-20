@@ -11,14 +11,11 @@ import HabitsBox from "./HabitsBox";
 
 function TodayPage() {
 
-    const { config, habitsFinished, setHabitsFinished } = useContext(LevelContext);
-    const [habitToday, setHabitToday] = useState([])
-    const [concluded, setConcluded] = useState(habitsFinished.length);
+    const { config, habitsFinished, percentage, setPercentage, habitToday,
+        setHabitToday, setHabitsFinished } = useContext(LevelContext);
     const today = daysOfWeek[dayjs().day()].name;
     const month = dayjs().month() + 1;
     const date = dayjs().date();
-    const total = habitToday.length
-    const percentage = Math.round((concluded / total) * 100);
 
 
     useEffect(() => {
@@ -26,8 +23,10 @@ function TodayPage() {
             .then(res => {
                 console.log(res.data)
                 setHabitToday(res.data)
+                setHabitsFinished(res.data.filter(h => h.done === true))
+                setPercentage(Math.round(res.data.filter(h => h.done === true).length/res.data.length * 100))
             })
-            .catch(err => err.response.data.message)
+            .catch(err => alert(err))
     }, []);
 
     return (
@@ -37,19 +36,21 @@ function TodayPage() {
 
             <MainToday>
                 <h2 data-test="today">{today}, {date}/{(month < 10) ? `0${month}` : { month }}</h2>
-                <h3 data-test="today-counter">{(concluded === 0) ? "Nenhum hábito concluído ainda" :
+                <h3 
+                percentage={percentage}
+                data-test="today-counter">{(percentage === 0) ? "Nenhum hábito concluído ainda" :
                     `${percentage}% dos hábitos concluídos`}</h3>
 
-                {habitToday.map(h => (
+                {habitToday.map(h =>
                     <HabitsBox
                         key={h.id}
-                        name={h.name}
-                        currentSequence={h.currentSequence}
-                        highestSequence={h.highestSequence}
+                        id={h.id}
                         h={h}
+                        name={h.name}
                         done={h.done}
-                        concluded={concluded}
-                        setConcluded={setConcluded} />))}
+                        currentSequence={h.currentSequence}
+                        highestSequence={h.highestSequence} />
+                )}
 
             </MainToday>
             <Footer />

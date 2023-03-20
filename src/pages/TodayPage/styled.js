@@ -36,7 +36,7 @@ export const MainToday = styled.main`
         font-weight: 400;
         font-size: 17.976px;
         line-height: 22px;
-        color: #BABABA;
+        color: ${p => p.percentage !== 0 ? "#8FC549" : "#BABABA"};
         margin-bottom: 15px;
         margin-left: 15px;
     }
@@ -50,10 +50,11 @@ export const BoxHabits = styled.div`
     margin-bottom: 10px;
     padding: 10px;
     display: flex;    
+    justify-content: space-between;
 `
 
 export const Task = styled.div`
-    width: 100vw;
+    width: 200px;
     height: 200px;
 
     >h2 {
@@ -82,10 +83,12 @@ export const Task = styled.div`
 `
 
 export const StyledIcon = styled(Checkbox)`
-    width: 39px;
-    height: 39px;
-    background: #EBEBEB;
-    border: 1px solid #E7E7E7;
+    width: 69px;
+    height: 69px;
+    background: transparent;
+    border: none;
     border-radius: 5px;
-    background-color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `

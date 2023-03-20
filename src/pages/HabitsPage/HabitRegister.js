@@ -10,8 +10,6 @@ function HabitRegister({ reload }) {
 
     const { setName, name, days, setDays, config, setAdd, enabled, setEnabled } = useContext(LevelContext)
 
-    setEnabled(false);
-    
     function addHabit() {
 
         const body = { name, days };
@@ -24,11 +22,16 @@ function HabitRegister({ reload }) {
                     setDays([])
                     setName("")
                     setAdd(false)
-                    reload();
+                    reload();           
                     console.log(res.data)
+                    setEnabled(false)
                 })
-                .catch(err => alert(err.response.data.message))
+                .catch(err => {
+                    setEnabled(false)
+                    alert(err.response.data.message)
+                })
         } else {
+            setEnabled(false)
             alert("escolha os dias")
         }
     }
