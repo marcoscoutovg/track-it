@@ -9,13 +9,13 @@ import { Button, Form } from "./styled";
 function InfoRegister() {
 
     const navigate = useNavigate();
-    const [enabled, setEnabled] = useState(false);
     const [email, setEmail] = useState("")
     const [name, setName] = useState("")
-    const { image, setImage } = useContext(LevelContext)
+    const { image, setImage, enabled, setEnabled } = useContext(LevelContext)
     const [password, setPassword] = useState("")
 
     function register(e) {
+        e.preventDefault();
 
         setEnabled(true)
 
@@ -86,16 +86,16 @@ function InfoRegister() {
             <Button
                 data-test="sigup-btn"
                 disabled={enabled}
-                type="submit">{!enabled ? "Cadastrar"
-                    : <ThreeDots
-                        height="27"
-                        width="60"
-                        radius="9"
-                        color="#ffffff"
-                        ariaLabel="three-dots-loading"
-                        wrapperStyle={{}}
-                        wrapperClassName=""
-                        visible={true} />}</Button>
+                type="submit">{enabled ? <ThreeDots
+                    height="27"
+                    width="60"
+                    radius="9"
+                    color="#ffffff"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true} /> : "Cadastrar"}
+            </Button>
         </Form >
     );
 }

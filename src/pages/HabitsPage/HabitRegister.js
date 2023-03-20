@@ -8,11 +8,13 @@ import { LevelContext } from "../../LevelContext";
 
 function HabitRegister({ reload }) {
 
-    const { setName, name, days, setDays, config, setAdd } = useContext(LevelContext)
+    const { setName, name, days, setDays, config, setAdd, enabled, setEnabled } = useContext(LevelContext)
 
     function addHabit() {
 
         const body = { name, days };
+
+        setEnabled(true);
 
         if (days.length > 0) {
             axios.post(`${BASE_URL}/habits`, body, config)
@@ -28,7 +30,7 @@ function HabitRegister({ reload }) {
             alert("escolha os dias")
         }
     }
-    
+
     function selectedDays(id) {
         if (days.includes(id)) {
             setDays(days.filter((d) => d !== id))
@@ -40,6 +42,7 @@ function HabitRegister({ reload }) {
     return (
         <RegisterHabit data-test="habit-create-container">
             <input
+                disabled={enabled}
                 data-test="habit-name-input"
                 placeholder="nome do hábito"
                 required
@@ -50,6 +53,7 @@ function HabitRegister({ reload }) {
             <Week>
                 {daysOfWeek.map((c) =>
                     <Days
+                        disabled={enabled}
                         id={c.id}
                         days={days}
                         data-test="habit-day"
@@ -59,9 +63,11 @@ function HabitRegister({ reload }) {
 
             <Buttons>
                 <Cancel
+                    disabled={enabled}
                     data-test="habit-create-cancel-btn"
                     onClick={() => setAdd(false)}>Cancelar</Cancel>
                 <Save
+                    disabled={enabled}
                     data-test="habit-create-save-btn"
                     onClick={addHabit}>Salvar</Save>
             </Buttons>
