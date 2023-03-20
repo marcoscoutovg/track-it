@@ -2,11 +2,12 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import BASE_URL from "../../constants/baseUrl";
 import { LevelContext } from "../../LevelContext";
-import { BoxHabits, StyledIcon, Task } from "./styled";
+import { BoxHabits, StyledIcon, Task, Record } from "./styled";
 
 function HabitsBox({ name, currentSequence, highestSequence, h, done }) {
 
     const [marcadas, setMarcadas] = useState([])
+    const [check, setCheck] = useState(done)
 
     const { config, habitsFinished,
         setHabitsFinished, habitToday, setHabitToday, setPercentage } = useContext(LevelContext);
@@ -17,7 +18,7 @@ function HabitsBox({ name, currentSequence, highestSequence, h, done }) {
                 console.log(res.data)
                 setHabitToday(res.data)
             })
-            .catch(err => console.log(err))
+            .catch(err => alert(err))
     }
 
     function habitConcluded(infoHabit) {
@@ -32,22 +33,25 @@ function HabitsBox({ name, currentSequence, highestSequence, h, done }) {
                     const listaHabitos = [...habitsFinished, infoHabit]
                     setHabitsFinished(listaHabitos);
                     setPercentage(Math.round(listaHabitos.length / habitToday.length * 100));
+                    setCheck(!done)
                     reload();
                 }
                 ).catch(err => {
-                    console.log(err)
+                    alert(err)
                 })
         } else {
 
             axios.post(`${BASE_URL}/habits/${infoHabit.id}/uncheck`, body, config)
                 .then(() => {
-                    const lista = [...habitsFinished].filter(h => h !== infoHabit)
-                    setHabitsFinished();
+                    const lista = habitsFinished.filter(h => h !== infoHabit)
+                    console.log(lista)
+                    setHabitsFinished(lista);
                     setPercentage(Math.round((lista.length) / habitToday.length * 100));
+                    setCheck(!done)
                     reload();
                 }
                 ).catch(err => {
-                    console.log(err)
+                    alert(err)
                 })
         }
     }
@@ -60,7 +64,11 @@ function HabitsBox({ name, currentSequence, highestSequence, h, done }) {
             <Task>
                 <h2 data-test="today-habit-name">{name}</h2>
                 <p data-test="today-habit-sequence">Sequência atual: {currentSequence} {(currentSequence === 1 ? "dia" : "dias")}</p>
-                <p data-test="today-habit-record">Seu recorde: {highestSequence} {(highestSequence === 1 ? "dia" : "dias")} </p>
+                <p data-test="today-habit-record">Seu recorde:
+                    <Record
+                        highestSequence={highestSequence}
+                        currentSequence={currentSequence}>
+                        {highestSequence} {(highestSequence === 1 ? "dia" : "dias")} </Record></p>
             </Task>
             <StyledIcon
                 visible={true}
@@ -69,7 +77,7 @@ function HabitsBox({ name, currentSequence, highestSequence, h, done }) {
                 ariaLabel="comment-loading"
                 wrapperStyle={{}}
                 wrapperClass="comment-wrapper"
-                color={done ? "#8FC549" : "#EBEBEB"}
+                color={check ? "#8FC549" : "#EBEBEB"}
                 backgroundColor="red"
                 data-test="today-habit-check-btn"
                 onClick={() => habitConcluded(h)} />

@@ -28,7 +28,7 @@ export const MainToday = styled.main`
         margin-left: 10px;
     }
 
-    h3 {
+    >h3 {
         width: 378px;
         height: 22px;
         font-family: 'Lexend Deca';
@@ -80,6 +80,17 @@ export const Task = styled.div`
         color: #666666;
         padding-left: 7px;
     }
+`
+
+export const Record = styled.span `
+    width: 246px;
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12.976px;
+    line-height: 16px;
+    color: ${p => p.currentSequence >= p.highestSequence ? "#8FC549" : "#666666"};
+    padding-left: 7px;
 `
 
 export const StyledIcon = styled(Checkbox)`

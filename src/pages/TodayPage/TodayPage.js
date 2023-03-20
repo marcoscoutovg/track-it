@@ -29,6 +29,8 @@ function TodayPage() {
             .catch(err => alert(err))
     }, []);
 
+    console.log(habitsFinished)
+
     return (
         <ContainerToday>
 
@@ -38,7 +40,7 @@ function TodayPage() {
                 <h2 data-test="today">{today}, {date}/{(month < 10) ? `0${month}` : { month }}</h2>
                 <h3 
                 percentage={percentage}
-                data-test="today-counter">{(percentage === 0) ? "Nenhum hábito concluído ainda" :
+                data-test="today-counter">{(percentage === 0 || habitToday.length === 0) ? "Nenhum hábito concluído ainda" :
                     `${percentage}% dos hábitos concluídos`}</h3>
 
                 {habitToday.map(h =>
