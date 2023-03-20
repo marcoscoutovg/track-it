@@ -8,7 +8,7 @@ import { Day, Habit, HabitsList, InfoHabits, TrashIcon, Week } from "./styled";
 
 function ListHabits() {
 
-    const { setHabitsList, habitsList, config, add, days } = useContext(LevelContext)
+    const { setHabitsList, habitsList, config, add } = useContext(LevelContext)
 
     function reload() {
         axios.get(`${BASE_URL}/habits`, config)
@@ -27,6 +27,7 @@ function ListHabits() {
 
             {(habitsList.length !== 0) ? habitsList.map((h) => (
                 <Habits
+                    habitDay={h.days}
                     name={h.name}
                     key={h.id}
                     id={h.id}
@@ -36,9 +37,9 @@ function ListHabits() {
     )
 }
 
-function Habits({ name, id, reload }) {
+function Habits({ name, id, reload, habitDay }) {
 
-    const { config } = useContext(LevelContext)
+    const { config, habitsList } = useContext(LevelContext)
 
     function deleteHabit(id) {
         (window.confirm("Você deseja deletar esse hábito"))
@@ -55,7 +56,8 @@ function Habits({ name, id, reload }) {
                 <Week>
                     {daysOfWeek.map((c) =>
                         <Day
-                            id={c.id}
+                            habitDay={habitDay}
+                            idW={c.id}
                             data-test="habit-day"
                             key={c.id}
                         >{c.day}</Day>)}

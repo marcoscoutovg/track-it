@@ -10,6 +10,8 @@ function HabitRegister({ reload }) {
 
     const { setName, name, days, setDays, config, setAdd, enabled, setEnabled } = useContext(LevelContext)
 
+    setEnabled(false);
+    
     function addHabit() {
 
         const body = { name, days };
@@ -55,7 +57,7 @@ function HabitRegister({ reload }) {
                     <Days
                         disabled={enabled}
                         id={c.id}
-                        days={days}
+                        daysW={days}
                         data-test="habit-day"
                         key={c.id}
                         onClick={() => selectedDays(c.id)}>{c.day}</Days>)}

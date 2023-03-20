@@ -87,7 +87,7 @@ export const Week = styled.div`
     display: flex;
 `
 
-export const Day = styled.button`
+export const Day = styled.div`
     width: 30px;
     height: 30px;
     border: 1px solid #CFCFCF;
@@ -102,7 +102,7 @@ export const Day = styled.button`
     font-size: 19.976px;
     line-height: 25px;
     color: #DBDBDB;
-    background-color:  "#FFFFFF";
+    background-color: ${p => p.habitDay.includes(p.idW) ? "#CFCFCF" : "#FFFFFF"};
     
 `
 
@@ -121,7 +121,7 @@ export const Days = styled.button`
     font-size: 19.976px;
     line-height: 25px;
     color: #DBDBDB;
-    background-color:"#FFFFFF";
+    background-color: ${p => p.daysW.includes(p.id) ? "#CFCFCF" : "#FFFFFF"};
     
 `
 
