@@ -12,6 +12,10 @@ function App() {
   const [token, setToken] = useState("");
   const [image, setImage] = useState("");
   const [habitsList, setHabitsList] = useState([]);
+  const [habitsFinished, setHabitsFinished] = useState([]);
+  const [name, setName] = useState("");
+  const [days, setDays] = useState([]);
+  const [add, setAdd] = useState(false);
 
   const config = {
     headers: {
@@ -22,7 +26,8 @@ function App() {
   return (
     <LevelContext.Provider value={{
       token, setToken, image, setImage, habitsList,
-      setHabitsList, config
+      setHabitsList, config, habitsFinished, setHabitsFinished,
+      name, setName, days, setDays, add, setAdd
     }}>
       <BrowserRouter>
         <Routes>

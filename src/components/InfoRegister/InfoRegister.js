@@ -1,11 +1,10 @@
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../constants/baseUrl";
 import { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { LevelContext } from "../../LevelContext";
-
+import { Button, Form } from "./styled";
 
 function InfoRegister() {
 
@@ -13,32 +12,32 @@ function InfoRegister() {
     const [enabled, setEnabled] = useState(false);
     const [email, setEmail] = useState("")
     const [name, setName] = useState("")
-    const {image, setImage} = useContext(LevelContext)
+    const { image, setImage } = useContext(LevelContext)
     const [password, setPassword] = useState("")
 
     function register(e) {
-        e.preventDefault();
+
+        setEnabled(true)
 
         const body = { email, name, image, password };
 
         axios.post(`${BASE_URL}/auth/sign-up`, body)
             .then(res => {
-                if (res.data === undefined || res.data === null) {
-                    setEnabled(true);
-                } else {
-                    setEnabled(false);
-                }
                 navigate("/")
                 console.log("enviou")
             })
-            .catch(err => alert(err.response.data.message))
-
+            .catch(err => {
+                console.log("não enviou")
+                alert(err.response.data.message)
+                setEnabled(false)
+            })
     }
 
     return (
         <Form onSubmit={register}>
             <label htmlFor="email"></label>
             <input
+                disabled={enabled}
                 data-test="email-input"
                 id="email"
                 type="email"
@@ -50,6 +49,7 @@ function InfoRegister() {
             />
             <label htmlFor="password"></label>
             <input
+                disabled={enabled}
                 data-test="password-input"
                 id="password"
                 type="password"
@@ -61,6 +61,7 @@ function InfoRegister() {
             />
             <label htmlFor="name"></label>
             <input
+                disabled={enabled}
                 data-test="user-name-input"
                 id="name"
                 type="text"
@@ -72,6 +73,7 @@ function InfoRegister() {
             />
             <label htmlFor="image"></label>
             <input
+                disabled={enabled}
                 data-test="user-image-input"
                 id="image"
                 type="url"
@@ -97,32 +99,5 @@ function InfoRegister() {
         </Form >
     );
 }
-
-const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`
-
-const Button = styled.button`
-    width: 303px;
-    height: 45px;
-    background: #52B6FF;
-    border-radius: 4.63636px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 6px;
-    margin-bottom: 25px;
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20.976px;
-    line-height: 26px;
-    text-align: center;
-    color: #FFFFFF;
-    text-decoration: none;
-`
 
 export default InfoRegister;
