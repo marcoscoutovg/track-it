@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import BASE_URL from "../../constants/baseUrl";
 import { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { LevelContext } from "../../LevelContext";
@@ -21,7 +20,7 @@ function InfoRegister() {
 
         const body = { email, name, image, password };
 
-        axios.post(`${BASE_URL}/auth/sign-up`, body)
+        axios.post(`${process.env.REACT_APP_API_URL}/auth/sign-up`, body)
             .then(res => {
                 navigate("/")
                 console.log("enviou")

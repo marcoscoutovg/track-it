@@ -1,7 +1,6 @@
 import { RegisterHabit, Week, Days, Buttons, Cancel, Save } from "./styled";
 import daysOfWeek from "../../constants/daysOfWeek";
 import axios from "axios";
-import BASE_URL from "../../constants/baseUrl";
 import { useContext } from "react";
 import { LevelContext } from "../../LevelContext";
 
@@ -17,7 +16,7 @@ function HabitRegister({ reload }) {
         setEnabled(true);
 
         if (days.length > 0) {
-            axios.post(`${BASE_URL}/habits`, body, config)
+            axios.post(`${process.env.REACT_APP_API_URL}/habits`, body, config)
                 .then(res => {
                     setDays([])
                     setName("")

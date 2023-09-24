@@ -3,7 +3,6 @@ import Footer from "../../components/Footer/Footer";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { LevelContext } from "../../LevelContext";
-import BASE_URL from "../../constants/baseUrl";
 import dayjs from "dayjs";
 import daysOfWeek from "../../constants/daysOfWeek";
 import { ContainerToday, MainToday } from "./styled";
@@ -19,7 +18,7 @@ function TodayPage() {
 
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/habits/today`, config)
+        axios.get(`${process.env.REACT_APP_API_URL}/habits/today`, config)
             .then(res => {
                 console.log(res.data)
                 setHabitToday(res.data)

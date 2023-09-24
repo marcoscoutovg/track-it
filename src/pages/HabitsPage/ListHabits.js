@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useContext } from "react";
-import BASE_URL from "../../constants/baseUrl";
 import daysOfWeek from "../../constants/daysOfWeek";
 import { LevelContext } from "../../LevelContext";
 import HabitRegister from "./HabitRegister";
@@ -11,7 +10,7 @@ function ListHabits() {
     const { setHabitsList, habitsList, config, add } = useContext(LevelContext)
 
     function reload() {
-        axios.get(`${BASE_URL}/habits`, config)
+        axios.get(`${process.env.REACT_APP_API_URL}/habits`, config)
             .then(res => {
                 console.log("pegou")
                 console.log(res.data)
@@ -43,7 +42,7 @@ function Habits({ name, id, reload, habitDay }) {
 
     function deleteHabit(id) {
         (window.confirm("Você deseja deletar esse hábito"))
-            && axios.delete(`${BASE_URL}/habits/${id}`, config)
+            && axios.delete(`${process.env.REACT_APP_API_URL}/habits/${id}`, config)
                 .then(reload)
                 .catch(err => alert(err.response.data.message))
     }

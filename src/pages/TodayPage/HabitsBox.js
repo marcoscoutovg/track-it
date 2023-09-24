@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useContext, useState } from "react";
-import BASE_URL from "../../constants/baseUrl";
 import { LevelContext } from "../../LevelContext";
 import { BoxHabits, StyledIcon, Task, Record } from "./styled";
 
@@ -13,7 +12,7 @@ function HabitsBox({ name, currentSequence, highestSequence, h, done }) {
         setHabitsFinished, habitToday, setHabitToday, setPercentage } = useContext(LevelContext);
 
     function reload() {
-        axios.get(`${BASE_URL}/habits/today`, config)
+        axios.get(`${process.env.REACT_APP_API_URL}/habits/today`, config)
             .then(res => {
                 console.log(res.data)
                 setHabitToday(res.data)
@@ -27,7 +26,7 @@ function HabitsBox({ name, currentSequence, highestSequence, h, done }) {
 
         if (!infoHabit.done) {
 
-            axios.post(`${BASE_URL}/habits/${infoHabit.id}/check`, body, config)
+            axios.post(`${process.env.REACT_APP_API_URL}/habits/${infoHabit.id}/check`, body, config)
                 .then(() => {
                     setMarcadas([...marcadas, infoHabit])
                     const listaHabitos = [...habitsFinished, infoHabit]
@@ -41,7 +40,7 @@ function HabitsBox({ name, currentSequence, highestSequence, h, done }) {
                 })
         } else {
 
-            axios.post(`${BASE_URL}/habits/${infoHabit.id}/uncheck`, body, config)
+            axios.post(`${process.env.REACT_APP_API_URL}/habits/${infoHabit.id}/uncheck`, body, config)
                 .then(() => {
                     const lista = habitsFinished.filter(h => h !== infoHabit)
                     console.log(lista)

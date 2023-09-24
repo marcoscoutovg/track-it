@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import BASE_URL from "../../constants/baseUrl";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import { LevelContext } from "../../LevelContext";
@@ -19,7 +18,7 @@ function InfoLogin() {
         setEnabled(true);
 
         const body = { email, password }
-        const url = `${BASE_URL}/auth/login`;
+        const url = `${process.env.REACT_APP_API_URL}/auth/login`;
 
 
         axios.post(url, body)
